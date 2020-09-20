@@ -3,8 +3,8 @@ citra_path = "C:\\Users\\Matthew\\Documents\\git\\citra\\build\\bin\\citra-qt.ex
 mm3d_path = "C:\\Users\\Matthew\\Documents\\Emulation\\Majora ACE\\3DS1192 - The Legend Of Zelda Majoras Mask 3D ( Usa) Decrypted.3ds"
 
 ### not ideal to hardcode this, but whatever
-player_addr = 0x09022400 # savestate where file was loaded immediately
-#player_addr = 0x0934F3C0 # savestate where intro played up til clock town
+player_addr = 0x09022400
+#player_addr = 0x0934F3C0
 
 VK_CODE = {'backspace':0x08,
            'tab':0x09,
@@ -165,6 +165,7 @@ import win32api
 import signal
 import random
 import ctypes
+from datetime import datetime
 
 def gdbStop():
     # surprisingly difficult to do this programatically, just use this tool
@@ -272,14 +273,20 @@ possiblePermutations = {
     'rightRupee5': [False, True],
     'rightRupee6': [False, True],
     'rightRupee7': [False, True],
+    'cornerRupee1': [False, True],
+    'cornerRupee2': [False, True],
+    'squareRupee1': [False, True],
+    'squareRupee2': [False, True],
+    'squareRupee3': [False, True],
+    'squareRupee4': [False, True],
     'roomAfterSRM0': ['left', 'right'],
     'roomAfterSRM1': ['left', 'right'],
     'roomAfterSRM2': ['left', 'right'],
     'roomAfterSRM3': ['left', 'right'],
-    'roomAfterSRM4': ['left', 'right']
+    'roomAfterSRM4': ['left', 'right'],
 }
 
-outfile = open('out.txt','w')
+outfile = open('output/out_%s.txt'%datetime.now().strftime('%Y%m%d%H%M%S'),'w')
 
 def write(string):
     print(string)
@@ -308,6 +315,8 @@ while True:
         citraKey('up_arrow', 2.4)
         citraKey('down_arrow', 2.4)
         time.sleep(0.3)
+    moveLink(10,0,1691,0xC000)
+    time.sleep(0.3)
     moveLink(-270,0,1684,0xC000)
     time.sleep(0.3)
     citraKey('q')
@@ -377,22 +386,22 @@ while True:
     if perm['srmPot'] == 'near':
         moveLink(373, 160, 2024, 0xA48B)
     else:
-        moveLink(381, 160, 2083, 0xA1FA)
+        moveLink(373, 160, 2072, 0xA48B)
     time.sleep(1.3)
     citraKey('m')
-    time.sleep(0.4)
+    time.sleep(0.25)
     citraPressKey('x')
-    time.sleep(0.4)
+    time.sleep(0.25)
     citraKey('n')
-    time.sleep(0.4)
+    time.sleep(0.25)
     citraKey('n')
-    time.sleep(0.4)
+    time.sleep(0.25)
     citraReleaseKey('x')
-    time.sleep(0.4)
+    time.sleep(0.25)
     gdbStop()
-    time.sleep(0.4)
+    time.sleep(0.25)
     citraKey('m')
-    time.sleep(0.4)
+    time.sleep(0.25)
     gdb("set *(short[1] *)(0x7751F8) = {0xBFFC}")
     gdb("set *(int*)(0x%X+0x2C0) = 0"%bombAddr)
     gdb('continue')
@@ -402,11 +411,15 @@ while True:
     write('srmAddr=%X'%srmAddr)
     time.sleep(2)
     moveLink(369, 170, 1997, 0xBDDF)
-    time.sleep(0.75)
+    time.sleep(0.5)
+    moveLink(300, 170, 1950, 0x8000)
+    time.sleep(0.5)
     moveLink(360, 170, 2064, 0x8146)
-    time.sleep(0.75)
+    time.sleep(0.5)
+    moveLink(385, 170, 1968, 0x01F9)
+    time.sleep(0.5)
     moveLink(370, 170, 1700, 0xC000)
-    time.sleep(0.75)
+    time.sleep(0.5)
     if perm['rightRupee1']:
         moveLink(444, 0, 1585, 0x8000)
     else:
@@ -442,7 +455,39 @@ while True:
     else:
         moveLink(466, 0, 1647, 0xC000)
     time.sleep(0.75)
-    moveLink(370, 0, 1700, 0xC000)
+    if perm['cornerRupee1']:
+        moveLink(983, 300, 1096, 0x8000)
+    else:
+        moveLink(983, 300, 1184, 0xC000)
+    time.sleep(1.35)
+    if perm['cornerRupee2']:
+        moveLink(878, 200, 1035, 0x8000)
+    else:
+        moveLink(878, 200, 998, 0xC000)
+    time.sleep(0.65)
+    if perm['squareRupee1']:
+        moveLink(1286, 200, 1111, 0x8000)
+    else:
+        moveLink(1239, 200, 1146, 0xC000)
+    time.sleep(0.65)
+    if perm['squareRupee2']:
+        moveLink(1286, 200, 1189, 0x8000)
+    else:
+        moveLink(1239, 200, 1146, 0xC000)
+    time.sleep(0.65)
+    if perm['squareRupee3']:
+        moveLink(1183, 200, 1111, 0x8000)
+    else:
+        moveLink(1239, 200, 1146, 0xC000)
+    time.sleep(0.65)
+    if perm['squareRupee4']:
+        moveLink(1183, 200, 1189, 0x8000)
+    else:
+        moveLink(1239, 200, 1146, 0xC000)
+    time.sleep(0.65)
+    moveLink(819, 250, 1165, 0xC000)
+    time.sleep(0.2)
+    moveLink(361, 180, 1702, 0xC000)
     time.sleep(0.3)
     citraKey('q')
     time.sleep(0.3)
