@@ -1,0 +1,41 @@
+{'roomAtStart': 'right', 'transitionItem1': 'sword', 'leftRupee1': True, 'leftRupee2': False, 'leftRupee3': True, 'transitionItem2': 'bomb', 'transitionItem3': 'sword', 'srmPot': 'far', 'rightRupee1': False, 'rightRupee2': False, 'rightRupee3': False, 'rightRupee4': True, 'rightRupee5': True, 'rightRupee6': True, 'rightRupee7': False, 'roomAfterSRM0': 'left', 'roomAfterSRM1': 'right', 'roomAfterSRM2': 'left', 'roomAfterSRM3': 'left', 'roomAfterSRM4': 'right'}
+srmAddr=98E7050
+statueAddr=98E5930 (-1720)
+statueAddr=98ECE00 (+5DB0)
+statueAddr=98EC9E0 (+5990)
+statueAddr=98EE270 (+7220)
+statueAddr=98EFE80 (+8E30)
+{'roomAtStart': 'left', 'transitionItem1': 'bomb', 'leftRupee1': False, 'leftRupee2': True, 'leftRupee3': False, 'transitionItem2': 'bombchu', 'transitionItem3': 'bomb', 'srmPot': 'far', 'rightRupee1': True, 'rightRupee2': True, 'rightRupee3': True, 'rightRupee4': False, 'rightRupee5': False, 'rightRupee6': True, 'rightRupee7': True, 'roomAfterSRM0': 'right', 'roomAfterSRM1': 'left', 'roomAfterSRM2': 'right', 'roomAfterSRM3': 'left', 'roomAfterSRM4': 'right'}
+srmAddr=0
+{'roomAtStart': 'right', 'transitionItem1': 'bombchu', 'leftRupee1': True, 'leftRupee2': False, 'leftRupee3': False, 'transitionItem2': 'bombchu', 'transitionItem3': None, 'srmPot': 'far', 'rightRupee1': False, 'rightRupee2': True, 'rightRupee3': True, 'rightRupee4': False, 'rightRupee5': False, 'rightRupee6': True, 'rightRupee7': True, 'roomAfterSRM0': 'right', 'roomAfterSRM1': 'left', 'roomAfterSRM2': 'right', 'roomAfterSRM3': 'right', 'roomAfterSRM4': 'left'}
+srmAddr=0
+{'roomAtStart': 'right', 'transitionItem1': None, 'leftRupee1': True, 'leftRupee2': True, 'leftRupee3': False, 'transitionItem2': None, 'transitionItem3': 'bombchu', 'srmPot': 'near', 'rightRupee1': False, 'rightRupee2': False, 'rightRupee3': False, 'rightRupee4': True, 'rightRupee5': False, 'rightRupee6': False, 'rightRupee7': False, 'roomAfterSRM0': 'left', 'roomAfterSRM1': 'left', 'roomAfterSRM2': 'right', 'roomAfterSRM3': 'right', 'roomAfterSRM4': 'right'}
+srmAddr=0
+statueAddr=10EFFF7 (+10EFFF7)
+statueAddr=10EFFF7 (+10EFFF7)
+statueAddr=10EFFF7 (+10EFFF7)
+statueAddr=10EFFF7 (+10EFFF7)
+statueAddr=10EFFF7 (+10EFFF7)
+{'roomAtStart': 'right', 'transitionItem1': 'sword', 'leftRupee1': True, 'leftRupee2': True, 'leftRupee3': False, 'transitionItem2': 'sword', 'transitionItem3': 'sword', 'srmPot': 'near', 'rightRupee1': False, 'rightRupee2': True, 'rightRupee3': False, 'rightRupee4': False, 'rightRupee5': False, 'rightRupee6': True, 'rightRupee7': True, 'roomAfterSRM0': 'right', 'roomAfterSRM1': 'right', 'roomAfterSRM2': 'left', 'roomAfterSRM3': 'left', 'roomAfterSRM4': 'left'}
+srmAddr=FEF2010E
+statueAddr=10EFFF7 (-FDE30117)
+statueAddr=10EFFF7 (-FDE30117)
+statueAddr=10EFFF7 (-FDE30117)
+statueAddr=10EFFF7 (-FDE30117)
+statueAddr=10EFFF7 (-FDE30117)
+{'roomAtStart': 'left', 'transitionItem1': 'bombchu', 'leftRupee1': True, 'leftRupee2': True, 'leftRupee3': False, 'transitionItem2': None, 'transitionItem3': None, 'srmPot': 'near', 'rightRupee1': False, 'rightRupee2': True, 'rightRupee3': True, 'rightRupee4': False, 'rightRupee5': False, 'rightRupee6': False, 'rightRupee7': True, 'roomAfterSRM0': 'left', 'roomAfterSRM1': 'right', 'roomAfterSRM2': 'right', 'roomAfterSRM3': 'left', 'roomAfterSRM4': 'right'}
+srmAddr=FEF2010E
+statueAddr=10EFFF7 (-FDE30117)
+statueAddr=10EFFF7 (-FDE30117)
+statueAddr=10EFFF7 (-FDE30117)
+statueAddr=10EFFF7 (-FDE30117)
+statueAddr=10EFFF7 (-FDE30117)
+{'roomAtStart': None, 'transitionItem1': 'bombchu', 'leftRupee1': True, 'leftRupee2': True, 'leftRupee3': False, 'transitionItem2': 'sword', 'transitionItem3': 'sword', 'srmPot': 'near', 'rightRupee1': False, 'rightRupee2': True, 'rightRupee3': True, 'rightRupee4': True, 'rightRupee5': False, 'rightRupee6': False, 'rightRupee7': True, 'roomAfterSRM0': 'left', 'roomAfterSRM1': 'left', 'roomAfterSRM2': 'right', 'roomAfterSRM3': 'left', 'roomAfterSRM4': 'right'}
+srmAddr=FEF2010E
+statueAddr=10EFFF7 (-FDE30117)
+statueAddr=10EFFF7 (-FDE30117)
+statueAddr=10EFFF7 (-FDE30117)
+statueAddr=10EFFF7 (-FDE30117)
+statueAddr=10EFFF7 (-FDE30117)
+{'roomAtStart': 'left', 'transitionItem1': 'bomb', 'leftRupee1': True, 'leftRupee2': True, 'leftRupee3': True, 'transitionItem2': None, 'transitionItem3': 'bomb', 'srmPot': 'near', 'rightRupee1': True, 'rightRupee2': False, 'rightRupee3': True, 'rightRupee4': False, 'rightRupee5': False, 'rightRupee6': False, 'rightRupee7': False, 'roomAfterSRM0': 'right', 'roomAfterSRM1': 'right', 'roomAfterSRM2': 'left', 'roomAfterSRM3': 'right', 'roomAfterSRM4': 'left'}
+srmAddr=FEF2010E
