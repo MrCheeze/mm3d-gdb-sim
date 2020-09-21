@@ -266,7 +266,19 @@ if heapWindow:
 time.sleep(3)
 
 possiblePermutations = {
-}
+    'roomAtStart0': [None],#, 'left', 'right'],
+    'roomAtStartItem0': [None],#, 'bomb', 'bombchu', 'bombchu'],
+    'roomAtStart1': [None],#, 'left', 'right'],
+    'roomAtStartItem1': [None],#, 'bomb', 'bombchu', 'bombchu'],
+    'roomAtStart2': [None],#, 'left', 'right'],
+    'roomAtStartItem2': [None],#, 'bomb', 'bombchu', 'bombchu'],
+    'transitionItem1': [None],#, 'bomb', 'bombchu', 'sword', 'bombchu'],
+    'leftRupee1': [False],#, True],
+    'leftRupee2': [False],#, True],
+    'leftRupee3': [False],#, True],
+    'leftPause': {'min':0,'max':0},#{'min':0, 'max':6},
+    'transitionItem2': [None],#, 'bomb', 'bombchu', 'sword', 'bombchu'],
+ }
 
 outfile = open('output/out_%s.txt'%datetime.now().strftime('%Y%m%d%H%M%S'),'w')
 
@@ -288,7 +300,72 @@ for _ in range(1):
 
     citraKey('0') # load most recent save
 
+    time.sleep(2.5)
+
+    for i in range(3):
+        room = perm['roomAtStart'+str(i)]
+        if room:
+            if room == 'left':
+                moveLink(0,0,1690,0xC000)
+            else:
+                moveLink(0,0,1690,0x4000)
+            time.sleep(0.3)
+            citraKey('q')
+            time.sleep(0.3)
+            keyForItem(perm['roomAtStartItem'+str(i)])
+            time.sleep(0.3)
+            citraKey('up_arrow', 2.4)
+            keyForItem(perm['roomAtStartItem'+str(i)])
+            citraKey('down_arrow', 2.4)
+            time.sleep(0.3)
+    moveLink(10,0,1691,0xC000)
+    time.sleep(0.3)
+    moveLink(-270,0,1684,0xC000)
+    time.sleep(0.3)
+    citraKey('q')
+    time.sleep(0.3)
+
+    keyForItem(perm['transitionItem1'])
+    time.sleep(0.5)
+    citraKey('up_arrow', 2.2)
+    keyForItem(perm['transitionItem1'],releaseSword=True)
+    time.sleep(1)
+    '''if perm['leftRupee1']:
+        moveLink(-515, 0, 1559, 0x8000)
+    else:
+        moveLink(-598, 0, 1710, 0xC000)
     time.sleep(2)
+    if perm['leftRupee2']:
+        moveLink(-449, 0, 1561, 0x8000)
+    else:
+        moveLink(-598, 0, 1710, 0xC000)
+    time.sleep(2)
+    if perm['leftRupee3']:
+        moveLink(-385, 0, 1564, 0x8000)
+    else:
+        moveLink(-598, 0, 1710, 0xC000)'''
+    time.sleep(2)
+    moveLink(-334, 100, 1727, 0x720E)
+    time.sleep(2)
+    citraKey('s')
+    time.sleep(0.5)
+    citraKey('s')
+    time.sleep(0.5)
+    moveLink(-336, 92, 1732, 0xFB34)
+    time.sleep(3)
+    citraKey('left_arrow', 1)
+    time.sleep(0.5)
+    moveLink(-183, 160, 1954, 0x3CAC)
+    time.sleep(0.2)
+    citraKey('q')
+    time.sleep(perm['leftPause'])
+    keyForItem(perm['transitionItem2'])
+    time.sleep(0.2)
+    citraKey('up_arrow', 2)
+    keyForItem(perm['transitionItem2'],releaseSword=True)
+    if perm['transitionItem2']:
+        citraKey('w',dur=7.5)
+    time.sleep(0.25)
 
     for i in range(6):
     
@@ -297,6 +374,8 @@ for _ in range(1):
         time.sleep(0.25)
         citraKey('q')
         time.sleep(0.25)
+        if i==5:
+            break
         citraKey('up_arrow', 0.9)
         time.sleep(0.1)
         moveLink(373, 160, 2024, 0xA48B)
