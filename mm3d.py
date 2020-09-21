@@ -258,11 +258,14 @@ if heapWindow:
 time.sleep(3)
 
 possiblePermutations = {
-    'roomAtStart': [None, 'left','right'],
+    'roomAtStart0': [None, 'left','right'],
+    'roomAtStart1': [None, 'left','right'],
+    'roomAtStart2': [None, 'left','right'],
     'transitionItem1': [None, 'bomb', 'bombchu', 'sword'],
     'leftRupee1': [False, True],
     'leftRupee2': [False, True],
     'leftRupee3': [False, True],
+    'nutLoadLeft': [False, True],
     'transitionItem2': [None, 'bomb', 'bombchu', 'sword'],
     'transitionItem3': [None, 'bomb', 'bombchu', 'sword'],
     'srmPot': ['near', 'far'],
@@ -279,6 +282,7 @@ possiblePermutations = {
     'squareRupee2': [False, True],
     'squareRupee3': [False, True],
     'squareRupee4': [False, True],
+    'nutLoadRight': [False, True],
     'roomAfterSRM0': ['left', 'right'],
     'roomAfterSRM1': ['left', 'right'],
     'roomAfterSRM2': ['left', 'right'],
@@ -304,17 +308,19 @@ while True:
 
     time.sleep(2)
 
-    if perm['roomAtStart']:
-        if perm['roomAtStart'] == 'left':
-            moveLink(9,0,1690,0xC000)
-        else:
-            moveLink(9,0,1690,0x4000)
-        time.sleep(0.3)
-        citraKey('q')
-        time.sleep(0.3)
-        citraKey('up_arrow', 2.4)
-        citraKey('down_arrow', 2.4)
-        time.sleep(0.3)
+    for i in range(3):
+        room = perm['roomAtStart'+str(i)]
+        if room:
+            if room == 'left':
+                moveLink(9,0,1690,0xC000)
+            else:
+                moveLink(9,0,1690,0x4000)
+            time.sleep(0.3)
+            citraKey('q')
+            time.sleep(0.3)
+            citraKey('up_arrow', 2.4)
+            citraKey('down_arrow', 2.4)
+            time.sleep(0.3)
     moveLink(10,0,1691,0xC000)
     time.sleep(0.3)
     moveLink(-270,0,1684,0xC000)
@@ -353,9 +359,11 @@ while True:
     citraKey('left_arrow', 1)
     time.sleep(0.5)
     moveLink(-183, 160, 1954, 0x3CAC)
-    time.sleep(0.5)
+    time.sleep(0.2)
     citraKey('q')
-    time.sleep(2)
+    time.sleep(0.2)
+    if not perm['nutLoadLeft']:
+        time.sleep(2.5)
     keyForItem(perm['transitionItem2'])
     time.sleep(0.5)
     citraKey('up_arrow', 2)
@@ -367,7 +375,7 @@ while True:
     time.sleep(0.25)
     keyForItem(perm['transitionItem3'])
     time.sleep(0.8)
-    citraKey('up_arrow', 1.5)
+    citraKey('up_arrow', 1.3)
     keyForItem(perm['transitionItem3'],releaseSword=True)
     citraKey('w',dur=5)
     moveLink(416, 170, 1946, 0x8A70)
@@ -491,14 +499,12 @@ while True:
     time.sleep(0.3)
     citraKey('q')
     time.sleep(0.3)
+    if perm['nutLoadRight']:
+        time.sleep(0.5)
     citraKey('up_arrow', 2)
     time.sleep(0.5)
 
     for i in range(5):
-
-        heldActor = getHeldActorAddress()
-        if heldActor == 0:
-            continue
         
         moveLink(-8, 0, 3009, 0xFFA6)
         time.sleep(0.5)
@@ -510,9 +516,13 @@ while True:
             write('statueAddr=%X (+%X)'%(statueAddr, statueAddr-srmAddr))
         else:
             write('statueAddr=%X (-%X)'%(statueAddr, srmAddr-statueAddr))
+
+        heldActor = getHeldActorAddress()
+        if heldActor == 0:
+            break
+        
         time.sleep(0.5)
         moveLink(-8, 0, 3009, 0xFFA6)
-        
         time.sleep(0.5)
         if perm['roomAfterSRM'+str(i)] == 'left':
             moveLink(9,0,1690,0xC000)
