@@ -3,8 +3,8 @@ citra_path = "C:\\Users\\Matthew\\Documents\\git\\citra\\build\\bin\\citra-qt.ex
 mm3d_path = "C:\\Users\\Matthew\\Documents\\Emulation\\Majora ACE\\3DS1192 - The Legend Of Zelda Majoras Mask 3D ( Usa) Decrypted.3ds"
 
 ### not ideal to hardcode this, but whatever
-#player_addr = 0x09022400
-player_addr = 0x0934F3C0
+player_addr = 0x09022400
+#player_addr = 0x0934F3C0
 
 VK_CODE = {'backspace':0x08,
            'tab':0x09,
@@ -266,28 +266,6 @@ if heapWindow:
 time.sleep(3)
 
 possiblePermutations = {
-    'roomAtStart0': [None, 'left', 'right'],
-    'roomAtStartItem0': [None, 'bomb', 'bombchu', 'bombchu'],
-    'roomAtStart1': [None, 'left', 'right'],
-    'roomAtStartItem1': [None, 'bomb', 'bombchu', 'bombchu'],
-    'roomAtStart2': [None, 'left', 'right'],
-    'roomAtStartItem2': [None, 'bomb', 'bombchu', 'bombchu'],
-    'transitionItem1': [None, 'bomb', 'bombchu', 'sword', 'bombchu'],
-    'leftRupee1': [False, True],
-    'leftRupee2': [False, True],
-    'leftRupee3': [False, True],
-    'leftPause': {'min':0, 'max':6},
-    'transitionItem2': [None, 'bomb', 'bombchu', 'sword', 'bombchu'],
-    'bridgeRoom0': [None, 'left', 'right'],
-    'bridgeRoomItem0': [None, 'bomb', 'bombchu', 'bombchu'],
-    'bridgePause0': {'min':0, 'max':6},
-    'bridgeRoom1': [None, 'left', 'right'],
-    'bridgeRoomItem1': [None, 'bomb', 'bombchu', 'bombchu'],
-    'bridgePause1': {'min':0, 'max':6},
-    'bridgeRoom2': [None, 'left', 'right'],
-    'bridgeRoomItem2': [None, 'bomb', 'bombchu', 'bombchu'],
-    'bridgePause2': {'min':0, 'max':6},
-    'transitionItem3': [None, 'bomb', 'bombchu', 'sword', 'bombchu'],
 }
 
 outfile = open('output/out_%s.txt'%datetime.now().strftime('%Y%m%d%H%M%S'),'w')
@@ -297,7 +275,7 @@ def write(string):
     outfile.write(str(string)+'\n')
     outfile.flush()
 
-while True:
+for _ in range(1):
 
     perm = possiblePermutations.copy()
     for key in perm:
@@ -305,115 +283,38 @@ while True:
             perm[key] = random.uniform(perm[key]['min'],perm[key]['max'])
         else:
             perm[key] = random.choice(perm[key])
+    perm['rightNutLoaded'] = [True, False, False, False, True]
     write(perm)
 
     citraKey('0') # load most recent save
 
-    time.sleep(2.5)
+    time.sleep(2)
 
-    for i in range(3):
-        room = perm['roomAtStart'+str(i)]
-        if room:
-            if room == 'left':
-                moveLink(0,0,1690,0xC000)
-            else:
-                moveLink(0,0,1690,0x4000)
-            time.sleep(0.3)
-            citraKey('q')
-            time.sleep(0.3)
-            keyForItem(perm['roomAtStartItem'+str(i)])
-            time.sleep(0.3)
-            citraKey('up_arrow', 2.4)
-            keyForItem(perm['roomAtStartItem'+str(i)])
-            citraKey('down_arrow', 2.4)
-            time.sleep(0.3)
-    moveLink(10,0,1691,0xC000)
-    time.sleep(0.3)
-    moveLink(-270,0,1684,0xC000)
-    time.sleep(0.3)
-    citraKey('q')
-    time.sleep(0.3)
-
-    keyForItem(perm['transitionItem1'])
-    time.sleep(0.5)
-    citraKey('up_arrow', 2.2)
-    keyForItem(perm['transitionItem1'],releaseSword=True)
-    time.sleep(1)
-    if perm['leftRupee1']:
-        moveLink(-515, 0, 1559, 0x8000)
-    else:
-        moveLink(-598, 0, 1710, 0xC000)
-    time.sleep(2)
-    if perm['leftRupee2']:
-        moveLink(-449, 0, 1561, 0x8000)
-    else:
-        moveLink(-598, 0, 1710, 0xC000)
-    time.sleep(2)
-    if perm['leftRupee3']:
-        moveLink(-385, 0, 1564, 0x8000)
-    else:
-        moveLink(-598, 0, 1710, 0xC000)
-    time.sleep(2)
-    moveLink(-334, 100, 1727, 0x720E)
-    time.sleep(2)
-    citraKey('s')
-    time.sleep(0.5)
-    citraKey('s')
-    time.sleep(0.5)
-    moveLink(-336, 92, 1732, 0xFB34)
-    time.sleep(3)
-    citraKey('left_arrow', 1)
-    time.sleep(0.5)
-    moveLink(-183, 160, 1954, 0x3CAC)
-    time.sleep(0.2)
-    citraKey('q')
-    time.sleep(perm['leftPause'])
-    keyForItem(perm['transitionItem2'])
-    time.sleep(0.2)
-    citraKey('up_arrow', 2)
-    keyForItem(perm['transitionItem2'],releaseSword=True)
-    if perm['transitionItem2']:
-        citraKey('w',dur=7.5)
-    time.sleep(0.25)
-
-    for i in range(3):
-        room = perm['bridgeRoom'+str(i)]
-        if room:
-            if room == 'left':
-                moveLink(0,160,1935,0xC000)
-            else:
-                moveLink(0,160,1935,0x4000)
-            time.sleep(0.3)
-            citraKey('q')
-            time.sleep(0.3)
-            keyForItem(perm['bridgeRoomItem'+str(i)])
-            time.sleep(0.3)
-            citraKey('up_arrow', 2.4)
-            keyForItem(perm['bridgeRoomItem'+str(i)])
-            time.sleep(perm['bridgePause'+str(i)])
-            citraKey('down_arrow', 2.4)
-            time.sleep(0.3)
+    for i in range(6):
     
-    time.sleep(0.25)
-    moveLink(250, 160, 1947, 0x415E)
-    time.sleep(0.25)
-    citraKey('q')
-    time.sleep(0.25)
-    keyForItem(perm['transitionItem3'])
-    time.sleep(0.8)
-    citraKey('up_arrow', 1.3)
-    keyForItem(perm['transitionItem3'],releaseSword=True)
-    time.sleep(0.5)
-    moveLink(444, 170, 1951, 0xA48B)
-    time.sleep(0.5)
-    moveLink(373, 160, 2024, 0xA48B)
-    time.sleep(0.7)
-    firstPotAddr = getHeldActorAddress()
-    firstPotSize = getHeldActorSize()
-    write('firstPotAddr=%X, firstPotSize=%X'%(firstPotAddr,firstPotSize))
-    moveLink(373, 160, 2072, 0xA48B)
-    time.sleep(0.5)
-    secondPotAddr = getHeldActorAddress()
-    secondPotSize = getHeldActorSize()
-    write('secondPotAddr=%X, secondPotSize=%X'%(secondPotAddr,secondPotSize))
-    time.sleep(0.5)
+        time.sleep(0.25)
+        moveLink(250, 160, 1947, 0x4000)
+        time.sleep(0.25)
+        citraKey('q')
+        time.sleep(0.25)
+        citraKey('up_arrow', 0.9)
+        time.sleep(0.1)
+        moveLink(373, 160, 2024, 0xA48B)
+        time.sleep(0.8)
+        firstPotAddr = getHeldActorAddress()
+        firstPotSize = getHeldActorSize()
+        moveLink(373, 160, 2072, 0xA48B)
+        time.sleep(0.8)
+        secondPotAddr = getHeldActorAddress()
+        secondPotSize = getHeldActorSize()
+        write('1stPotAddr=%X, 1stPotSize=%X, 2ndPotAddr=%X, 2ndPotSize=%X'%(firstPotAddr,firstPotSize,secondPotAddr,secondPotSize))
+        moveLink(365, 170, 1951, 0xC000)
+        time.sleep(0.1)
+        citraKey('q')
+        time.sleep(0.2)
+        if i != 5:
+            if not perm['rightNutLoaded'][i]:
+                time.sleep(1)
+            citraKey('up_arrow', 2)
+
+    time.sleep(1.5)
