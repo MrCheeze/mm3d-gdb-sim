@@ -266,18 +266,19 @@ if heapWindow:
 time.sleep(3)
 
 possiblePermutations = {
-    'roomAtStart0': [None],#, 'left', 'right'],
-    'roomAtStartItem0': [None],#, 'bomb', 'bombchu', 'bombchu'],
-    'roomAtStart1': [None],#, 'left', 'right'],
-    'roomAtStartItem1': [None],#, 'bomb', 'bombchu', 'bombchu'],
-    'roomAtStart2': [None],#, 'left', 'right'],
-    'roomAtStartItem2': [None],#, 'bomb', 'bombchu', 'bombchu'],
-    'transitionItem1': [None],#, 'bomb', 'bombchu', 'sword', 'bombchu'],
-    'leftRupee1': [False],#, True],
-    'leftRupee2': [False],#, True],
-    'leftRupee3': [False],#, True],
-    'leftPause': {'min':0,'max':0},#{'min':0, 'max':6},
-    'transitionItem2': [None],#, 'bomb', 'bombchu', 'sword', 'bombchu'],
+    'roomAtStart0': [None, 'left', 'right'],
+    'roomAtStartItem0': [None, 'bomb', 'bombchu', 'bombchu'],
+    'roomAtStart1': [None, 'left', 'right'],
+    'roomAtStartItem1': [None, 'bomb', 'bombchu', 'bombchu'],
+    'roomAtStart2': [None, 'left', 'right'],
+    'roomAtStartItem2': [None, 'bomb', 'bombchu', 'bombchu'],
+    'transitionItem1': [None, 'bomb', 'bombchu', 'sword', 'bombchu'],
+    'leftRupee1': [False, True],
+    'leftRupee2': [False, True],
+    'leftRupee3': [False, True],
+    'leftPause': {'min':6,'max':6},#{'min':0, 'max':6},
+    'transitionItem2': [None, 'bomb', 'bombchu', 'sword', 'bombchu'],
+    'rightNutLoaded': [False, True],
  }
 
 outfile = open('output/out_%s.txt'%datetime.now().strftime('%Y%m%d%H%M%S'),'w')
@@ -287,7 +288,7 @@ def write(string):
     outfile.write(str(string)+'\n')
     outfile.flush()
 
-for _ in range(1):
+while True:
 
     perm = possiblePermutations.copy()
     for key in perm:
@@ -295,10 +296,12 @@ for _ in range(1):
             perm[key] = random.uniform(perm[key]['min'],perm[key]['max'])
         else:
             perm[key] = random.choice(perm[key])
-    perm['rightNutLoaded'] = [True, False, False, False, True]
+
+    
     write(perm)
 
-    citraKey('0') # load most recent save
+    time.sleep(0.5)
+    citraKey('0',dur=0.5) # load most recent save
 
     time.sleep(2.5)
 
@@ -330,7 +333,7 @@ for _ in range(1):
     citraKey('up_arrow', 2.2)
     keyForItem(perm['transitionItem1'],releaseSword=True)
     time.sleep(1)
-    '''if perm['leftRupee1']:
+    if perm['leftRupee1']:
         moveLink(-515, 0, 1559, 0x8000)
     else:
         moveLink(-598, 0, 1710, 0xC000)
@@ -343,7 +346,7 @@ for _ in range(1):
     if perm['leftRupee3']:
         moveLink(-385, 0, 1564, 0x8000)
     else:
-        moveLink(-598, 0, 1710, 0xC000)'''
+        moveLink(-598, 0, 1710, 0xC000)
     time.sleep(2)
     moveLink(-334, 100, 1727, 0x720E)
     time.sleep(2)
@@ -367,33 +370,45 @@ for _ in range(1):
         citraKey('w',dur=7.5)
     time.sleep(0.25)
 
-    for i in range(6):
-    
-        time.sleep(0.25)
-        moveLink(250, 160, 1947, 0x4000)
-        time.sleep(0.25)
-        citraKey('q')
-        time.sleep(0.25)
-        if i==5:
-            break
-        citraKey('up_arrow', 0.9)
-        time.sleep(0.1)
-        moveLink(373, 160, 2024, 0xA48B)
-        time.sleep(0.8)
-        firstPotAddr = getHeldActorAddress()
-        firstPotSize = getHeldActorSize()
-        moveLink(373, 160, 2072, 0xA48B)
-        time.sleep(0.8)
-        secondPotAddr = getHeldActorAddress()
-        secondPotSize = getHeldActorSize()
-        write('1stPotAddr=%X, 1stPotSize=%X, 2ndPotAddr=%X, 2ndPotSize=%X'%(firstPotAddr,firstPotSize,secondPotAddr,secondPotSize))
-        moveLink(365, 170, 1951, 0xC000)
-        time.sleep(0.1)
-        citraKey('q')
-        time.sleep(0.2)
-        if i != 5:
-            if not perm['rightNutLoaded'][i]:
-                time.sleep(1)
-            citraKey('up_arrow', 2)
+    seen_msgs = set()
+    for i in range(25):
 
-    time.sleep(1.5)
+        try:
+            time.sleep(0.25)
+            moveLink(250, 160, 1947, 0x4000)
+            time.sleep(0.25)
+            citraKey('q')
+            time.sleep(0.25)
+            #if i==5:
+            #    break
+            citraKey('up_arrow', 1.2)
+            citraKey('w',dur=0.8)
+            moveLink(373, 160, 2024, 0xA48B)
+            time.sleep(0.8)
+            firstPotAddr = getHeldActorAddress()
+            firstPotSize = getHeldActorSize()
+            moveLink(373, 160, 2072, 0xA48B)
+            time.sleep(0.8)
+            secondPotAddr = getHeldActorAddress()
+            secondPotSize = getHeldActorSize()
+            msg = '1stPotAddr=%X, 1stPotSize=%X, 2ndPotAddr=%X, 2ndPotSize=%X'%(firstPotAddr,firstPotSize,secondPotAddr,secondPotSize)
+            write(msg)
+            if msg in seen_msgs:
+                break
+            if firstPotSize == 0x2E0 or secondPotSize == 0x2E0:
+                raise Exception('found setup?')
+            seen_msgs.add(msg)
+            moveLink(365, 170, 1951, 0xC000)
+            time.sleep(0.1)
+            citraKey('q')
+            time.sleep(0.2)
+            if perm['rightNutLoaded']:
+                time.sleep(1)
+            citraKey('a')
+            time.sleep(0.2)
+            citraKey('up_arrow', 2)
+        except ValueError:
+            gdb('continue')
+            break
+
+    time.sleep(2.5)
